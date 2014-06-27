@@ -1,16 +1,16 @@
 class BerlinClock
-  def initialize(time)
-    @time = time
+
+
+  def to_berlin_time(time)
+    second = time[6..7].to_i
+    minute = time[3..4].to_i
+    hour = time[0..1].to_i
+    puts seconds_to_light(second) + "\n" + hours_line_one(hour) + "\n" + hours_line_two(hour) + "\n" + minutes_line_one(minute) + "\n" + minutes_line_two(minute)
   end
 
-  def to_berlin_time
-    puts self.seconds_to_light + "\n" + self.hours_line_one + "\n" + self.hours_line_two + "/n" + self.minutes_line_one + "\n" + self.minutes_line_two
-  end
 
 
-
-  def seconds_to_light
-    seconds = @time[6..7].to_i
+  def seconds_to_light(seconds)
     if seconds % 2 == 0
       return "Y"
     else
@@ -19,38 +19,32 @@ class BerlinClock
   end
 
 
-  def hours_line_one
-    a = @time[0..1].to_i / 5
-    if a == 0
-      return "OOOO"
-    elsif a == 1
-      return "ROOO"
-    elsif a == 2
-      return "RROO"
-    elsif a == 3
-      return "RRRO"
-    elsif a == 4
-      return "RRRR"
+  def hours_line_one(hours)
+    a = hours / 5
+    hours_string = ''
+    a.times do
+      hours_string << 'R'
     end
+    (4 - a).times do
+      hours_string << 'O'
+    end
+    return hours_string
   end
 
-  def hours_line_two
-    b = @time[0..1].to_i % 5
-    if b == 0
-      return "OOOO"
-    elsif b == 1
-      return "ROOO"
-    elsif b == 2
-      return "RROO"
-    elsif b == 3
-      return "RRRO"
-    elsif b == 4
-      return "RRRR"
+  def hours_line_two(hours)
+    b = hours % 5
+    hours_two_string = ""
+    b.times do
+      hours_two_string << "R"
     end
+    (4 - b).times do
+      hours_two_string << "O"
+    end
+    return hours_two_string
   end
 
-  def minutes_line_one
-    c = @time[3..4].to_i / 5
+  def minutes_line_one(minutes)
+    c = minutes.to_i / 5
     d = ''
     i = 1
     c.times do
@@ -68,8 +62,8 @@ class BerlinClock
     return d
   end
 
-  def minutes_line_two
-    h = @time[3..4].to_i % 5
+  def minutes_line_two(minutes)
+    h = minutes % 5
     f = ''
     h.times do
       f << "Y"
