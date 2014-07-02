@@ -1,14 +1,17 @@
 class BerlinClock
+  attr_accessor :time
 
-
-  def to_berlin_time(time)
-    second = time[6..7].to_i
-    minute = time[3..4].to_i
-    hour = time[0..1].to_i
-    puts seconds_to_light(second) + "\n" + hours_line_one(hour) + "\n" + hours_line_two(hour) + "\n" + minutes_line_one(minute) + "\n" + minutes_line_two(minute)
+  def initialize(time = Time.now.strftime("%H:%M:%S"))
+    @time = time
   end
 
 
+  def to_berlin_time
+    second = time[6..7].to_i
+    minute = time[3..4].to_i
+    hour = time[0..1].to_i
+    return seconds_to_light(second) + "\n" + hours_line_one(hour) + "\n" + hours_line_two(hour) + "\n" + minutes_line_one(minute) + "\n" + minutes_line_two(minute)
+  end
 
   def seconds_to_light(seconds)
     if seconds % 2 == 0
@@ -74,3 +77,5 @@ class BerlinClock
     return f
   end
 end
+
+puts BerlinClock.new.to_berlin_time
